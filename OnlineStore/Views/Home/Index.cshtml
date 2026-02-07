@@ -1,0 +1,13 @@
+﻿@{
+    ViewData["Title"] = "Home";
+}
+
+<div class="text-center">
+    <h1>Welcome to the Store</h1>
+    <p class="lead">Explore products, add them to your cart and start shopping!</p>
+
+    <div style="margin-top: 30px;">
+        <a class="btn btn-primary" href="/Product/All">View Products</a>
+        <a class="btn btn-outline-secondary" href="@Url.Action("ViewCart", "ShoppingCart")">View Cart</a>
+    </div>
+</div>

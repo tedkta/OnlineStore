@@ -1,0 +1,55 @@
+﻿@model OnlineStore.Data.Models.ShoppingCart.ShoppingCartViewModel
+
+@{
+    ViewData["Title"] = "Your Cart";
+}
+
+<div class="container mt-4">
+    <h2 class="mb-4">🛒 Your Shopping Cart</h2>
+
+    @if (Model.CartItems != null && Model.CartItems.Any())
+    {
+        <table class="table table-bordered table-striped">
+            <thead class="table-dark">
+            <tr>
+                <th>Product</th>
+                <th style="width: 100px;">Quantity</th>
+                <th style="width: 120px;">Price</th>
+                <th style="width: 100px;">Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            @foreach (var item in Model.CartItems)
+            {
+                <tr>
+                    <td>@item.Product.Name</td>
+                    <td>@item.Quantity</td>
+                    <td>@item.Product.Price.ToString("C")</td>
+                    <td>
+                        <form asp-action="RemoveFromCart" method="post" style="display:inline">
+                            <input type="hidden" name="id" value="@item.Product.Id" />
+                            <button type="submit" class="btn btn-sm btn-danger">Remove</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+            </tbody>
+        </table>
+
+        <div class="text-end mt-3">
+            <h5>Total Quantity: <span class="badge bg-primary">@Model.TotalQuantity</span></h5>
+            <h5>Total Price: <span class="badge bg-success">@Model.TotalPrice.ToString("C")</span></h5>
+        </div>
+
+
+        <div class="text-end mt-3">
+            <a href="/PayOut/CheckOut" class="btn btn-success"> Proceed to Checkout</a>
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-info">Your cart is empty.</div>
+    }
+
+    <a href="/Product/All" class="btn btn-secondary mt-4">← Continue Shopping</a>
+</div>

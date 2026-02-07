@@ -1,0 +1,47 @@
+﻿@model List<OnlineStore.Data.Models.Product.GetAllProductsViewModel>
+@using OnlineStore.Services.Users
+@inject LoggedUserService loggedUserService
+
+
+<h2>All Products</h2>
+
+@if (loggedUserService.IsAdmin)
+{
+    <a asp-action="Create" asp-controller="Product" class="btn btn-success mb-3">+ Add New Product</a>
+}
+
+<table class="table">
+    <thead>
+    <tr>
+        <th>Name</th>
+        <th>Brand</th>
+        <th>Category</th>
+        <th>Price</th>
+        @if (loggedUserService.IsAdmin)
+        {
+            <th>Actions</th>
+        }
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var product in Model)
+    {
+        <tr>
+            <td>@product.Name</td>
+            <td>@product.Brand</td>
+            <td>@product.Category</td>
+            <td>@product.Price.ToString("C")</td>
+            @if (loggedUserService.IsAdmin)
+            {
+                <td>
+                    <a asp-action="Edit" asp-controller="Product" asp-route-id="@product.Id" class="btn btn-sm btn-outline-primary me-1">Edit</a>
+                    <a asp-action="Delete" asp-controller="Product" asp-route-id="@product.Id" class="btn btn-sm btn-outline-danger">Delete</a>
+                </td>
+            }
+            <td>
+                <a asp-action="ProductDetails" asp-controller="Product" asp-route-id="@product.Id" class="btn btn-sm btn-outline-primary">Details</a>
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>

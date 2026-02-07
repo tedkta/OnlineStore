@@ -1,0 +1,63 @@
+﻿@model OnlineStore.Data.Models.PayOut.PayOutViewModel
+
+<h2>Confirm Your Order</h2>
+
+<form asp-action="CheckOut" method="post">
+    @{
+        var index = 0;
+    }
+
+    @foreach (var item in Model.CartItems)
+    {
+        <div class="form-group border rounded p-3 mb-3">
+            <label>Product</label>
+            <input class="form-control" value="@item.Product.Name" readonly />
+
+            <label>Quantity</label>
+            <input class="form-control" value="@item.Quantity" readonly />
+
+            <label>Price</label>
+            <input class="form-control" value="@item.Product.Price.ToString("C")" readonly />
+
+            <input type="hidden" name="CartItems[@index].ProductId" value="@item.ProductId" />
+            <input type="hidden" name="CartItems[@index].Quantity" value="@item.Quantity" />
+        </div>
+        index++;
+    }
+
+    <div class="text-end mt-3">
+        <h5>Total Price: <span class="badge bg-success">@Model.TotalPrice.ToString("C")</span></h5>
+    </div>
+
+    <hr />
+
+    <h3>Shipping Information</h3>
+    <div class="form-group">
+        <label asp-for="FullName"></label>
+        <input asp-for="FullName" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="Address"></label>
+        <input asp-for="Address" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="Email"></label>
+        <input asp-for="Email" class="form-control" type="email" />
+    </div>
+
+    <h3>Payment Information</h3>
+    <div class="form-group">
+        <label asp-for="CardNumber"></label>
+        <input asp-for="CardNumber" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="Expiration"></label>
+        <input asp-for="Expiration" class="form-control" placeholder="MM/YY" />
+    </div>
+    <div class="form-group">
+        <label asp-for="CVV"></label>
+        <input asp-for="CVV" class="form-control" />
+    </div>
+
+    <button type="submit" class="btn btn-success mt-3">✅ Place Order</button>
+</form>

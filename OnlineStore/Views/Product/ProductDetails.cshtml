@@ -1,0 +1,12 @@
+﻿@model OnlineStore.Data.Models.Product.GetProductViewModel
+
+<h2>Product Details</h2>
+
+<p><strong>Name:</strong> @Model.Name</p>
+<p><strong>Description:</strong> @Model.Description</p>
+<p><strong>Price:</strong> $@Model.Price</p>
+<p><strong>Brand:</strong> @Model.Brand</p>
+<p><strong>Category:</strong> @Model.Category</p>
+<a asp-action="AddToCart" asp-controller="ShoppingCart" asp-route-id="@Model.Id" metho  class="btn btn-sm btn-outline-primary me-1">Add To Cart</a>
+
+<a asp-action="All" asp-controller="Product" class="btn btn-primary">Back</a>
