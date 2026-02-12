@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Teodor\\Documents\\OnlineStore\\OnlineStore\\OnlineStore.csproj": {}
+    "D:\\Programmr\\OnlineStore\\OnlineStore\\OnlineStore.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Teodor\\Documents\\OnlineStore\\OnlineStore\\OnlineStore.csproj": {
+    "D:\\Programmr\\OnlineStore\\OnlineStore\\OnlineStore.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Teodor\\Documents\\OnlineStore\\OnlineStore\\OnlineStore.csproj",
+        "projectUniqueName": "D:\\Programmr\\OnlineStore\\OnlineStore\\OnlineStore.csproj",
         "projectName": "OnlineStore",
-        "projectPath": "C:\\Users\\Teodor\\Documents\\OnlineStore\\OnlineStore\\OnlineStore.csproj",
-        "packagesPath": "C:\\Users\\Teodor\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Teodor\\Documents\\OnlineStore\\OnlineStore\\obj\\",
+        "projectPath": "D:\\Programmr\\OnlineStore\\OnlineStore\\OnlineStore.csproj",
+        "packagesPath": "C:\\Users\\MateussDev\\.nuget\\packages\\",
+        "outputPath": "D:\\Programmr\\OnlineStore\\OnlineStore\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+          "D:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\Teodor\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\MateussDev\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],

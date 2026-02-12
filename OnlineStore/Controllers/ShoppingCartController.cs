@@ -38,13 +38,26 @@ public class ShoppingCartController : Controller
         }
 
         shoppingCartService.AddToCart(id, user.Id);
-        return RedirectToAction("ViewCart");
+        // Go back to the page the user was on
+        string referer = Request.Headers["Referer"].ToString();
+        if (!string.IsNullOrEmpty(referer))
+            return Redirect(referer);
+
+        // Fallback if no referer
+        return RedirectToAction("Index", "Product"); // or wherever your product list is
     }
     
     public IActionResult RemoveFromCart(int id)
     {
         User user = loggedUserService.User;
         shoppingCartService.RemoveFromCart(id, user.Id);
-        return RedirectToAction("ViewCart");
+
+        //Go back to the page the user was on
+        string referer = Request.Headers["Referer"].ToString();
+        if (!string.IsNullOrEmpty(referer))
+            return Redirect(referer);
+
+        //Fallback if no referer
+        return RedirectToAction("Index", "Product"); // or wherever your product list is
     }
 }

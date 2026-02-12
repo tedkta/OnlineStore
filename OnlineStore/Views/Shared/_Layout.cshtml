@@ -1,5 +1,19 @@
 ﻿@using OnlineStore.Services.Users
+@using OnlineStore.Services.ShoppingCart
 @inject LoggedUserService loggedUserService;
+@inject IShoppingCartService shoppingCartService;
+@{
+    var totalItems = 0;
+
+    if (loggedUserService.User != null)
+    {
+        var cart = shoppingCartService.GetCart(loggedUserService.User.Id);
+        if (cart?.CartItems != null)
+        {
+            totalItems = cart.CartItems.Sum(ci => ci.Quantity);
+        }
+    }
+}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -31,14 +45,21 @@
                         <li class="nav-item">
                             <a class="nav-link" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" asp-controller="ShoppingCart" asp-action="ViewCart">Cart</a>
-                        </li>
                     </ul>
 
                     <ul class="navbar-nav">
                         @if (loggedUserService.IsLogged)
                         {
+                            <li class="nav-item d-flex flex-row align-items-center">
+                                <a class="nav-link" asp-controller="ShoppingCart" asp-action="ViewCart">Cart</a>
+                                @if (totalItems > 0)
+                                {
+                                    <span class="badge rounded-pill bg-danger">
+                                        @totalItems
+                                        <span class="visually-hidden">items in cart</span>
+                                    </span>
+                                }
+                            </li>
                             <li class="nav-item">
                                 <a class="nav-link" asp-controller="User" asp-action="Logout">Logout</a>
                             </li>

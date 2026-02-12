@@ -2,11 +2,48 @@
 
 <h2>Product Details</h2>
 
-<p><strong>Name:</strong> @Model.Name</p>
-<p><strong>Description:</strong> @Model.Description</p>
-<p><strong>Price:</strong> $@Model.Price</p>
-<p><strong>Brand:</strong> @Model.Brand</p>
-<p><strong>Category:</strong> @Model.Category</p>
-<a asp-action="AddToCart" asp-controller="ShoppingCart" asp-route-id="@Model.Id" metho  class="btn btn-sm btn-outline-primary me-1">Add To Cart</a>
+<div class="d-flex flex-row">
+	<div id="carouselExample" class="carousel slide" style="width:100%">
+		<div class="carousel-indicators">
+			<button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+			<button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+			<button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+		  </div>
+	  <div class="carousel-inner">
+		<div class="carousel-item active">
+		  <img src="https://placehold.co/600x400" class="d-block w-100" alt="...">
+		</div>
+		<div class="carousel-item">
+		  <img src="https://placehold.co/600x400" class="d-block w-100" alt="...">
+		</div>
+		<div class="carousel-item">
+		  <img src="https://placehold.co/600x400" class="d-block w-100" alt="...">
+		</div>
+	  </div>
+	  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+		<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+		<span class="visually-hidden">Previous</span>
+	  </button>
+	  <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+		<span class="carousel-control-next-icon" aria-hidden="true"></span>
+		<span class="visually-hidden">Next</span>
+	  </button>
+	</div>
 
-<a asp-action="All" asp-controller="Product" class="btn btn-primary">Back</a>
+	<div class="card" style="margin:1em">
+		<div class="card-body">
+			<div style="display: flex; flex-direction:row; width: 100%; justify-content:space-between; align-items: center">
+					<em class="small" style="color:gray">@Model.Category</em>
+					<span class="alert alert-success" style="padding: 4px; font-size: 18px">@Model.Price.ToString("c", System.Globalization.CultureInfo.GetCultureInfo("de-DE"))</span>
+				</div>
+				<h3>@Model.Name</h3>
+			<p><strong>Brand:</strong> @Model.Brand</p>
+			<p><strong>Description:</strong> @Model.Description</p>
+			<div style="display:flex; width:100%">
+				<a asp-action="AddToCart" asp-controller="ShoppingCart" asp-route-id="@Model.Id" metho  class="btn btn-primary me-1" style="width:100%">Add To Cart</a>
+				<a asp-action="All" asp-controller="Product" class="btn btn-outline-primary me-1" style="width:100%">Back</a>
+			</div>
+		</div>
+
+	</div>
+</div>
