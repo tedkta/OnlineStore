@@ -26,3 +26,92 @@
     </div>
     <button type="submit" class="btn btn-primary">Save Changes</button>
 </form>
+
+<hr />
+
+<h3>Product Images</h3>
+
+<!-- Add new image -->
+<div class="mb-3">
+    <input type="text" id="newImageUrl" class="form-control" placeholder="Image URL" style="width: 300px; display: inline;" />
+    <button type="button" id="addImageBtn" class="btn btn-success" data-product-id="@Model.Id">Add Image</button>
+</div>
+
+<!-- List of existing images -->
+<ul id="imageList" class="list-group">
+    @foreach (var img in Model.Images)
+    {
+        <li class="list-group-item d-flex justify-content-between align-items-center" data-image-id="@img.Id">
+            <img src="@img.Url" width="128"/>
+            <input type="text" class="form-control image-url" value="@img.Url" style="width: 70%;" />
+            <span>
+                <button class="btn btn-sm btn-outline-secondary update-image">Update</button>
+                <button class="btn btn-sm btn-outline-danger remove-image">Remove</button>
+            </span>
+        </li>
+    }
+</ul>
+
+<!-- Use Fancy AJAX to make images actually work -->
+@section Scripts {
+    <script>
+        const productId = @Model.Id;
+
+        // Add image
+        document.getElementById('addImageBtn').addEventListener('click', function() {
+            const urlInput = document.getElementById('newImageUrl');
+            const url = urlInput.value.trim();
+            if (!url) return;
+
+            fetch('/Product/AddImage', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: `productId=${productId}&url=${encodeURIComponent(url)}`
+            })
+            .then(res => res.json())
+            .then(data => {
+                // Create new list item
+                const li = document.createElement('li');
+                li.className = 'list-group-item d-flex justify-content-between align-items-center';
+                li.dataset.imageId = data.id;
+                li.innerHTML = `
+                    <img src="${data.url}" width="128"/>
+                    <input type="text" class="form-control image-url" value="${data.url}" style="width: 70%;" />
+                    <span>
+                        <button class="btn btn-sm btn-outline-secondary update-image">Update</button>
+                        <button class="btn btn-sm btn-outline-danger remove-image">Remove</button>
+                    </span>
+                `;
+                document.getElementById('imageList').appendChild(li);
+                urlInput.value = ''; // clear input
+            });
+        });
+
+        // Handle update and remove buttons (event delegation)
+        document.getElementById('imageList').addEventListener('click', function(e) {
+            const target = e.target;
+            const li = target.closest('li');
+            if (!li) return;
+
+            const imageId = li.dataset.imageId;
+
+            if (target.classList.contains('remove-image')) {
+                fetch('/Product/DeleteImage', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                    body: `id=${imageId}`
+                })
+                .then(() => li.remove());
+            }
+            else if (target.classList.contains('update-image')) {
+                const newUrl = li.querySelector('.image-url').value.trim();
+                if (!newUrl) return;
+                fetch('/Product/UpdateImage', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                    body: `id=${imageId}&url=${encodeURIComponent(newUrl)}`
+                });
+            }
+        });
+    </script>
+}

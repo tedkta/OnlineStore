@@ -1,4 +1,6 @@
-﻿namespace OnlineStore.Data.Models.Product;
+﻿using OnlineStore.Data.Models.Entities;
+
+namespace OnlineStore.Data.Models.Product;
 
 public class GetProductViewModel
 {
@@ -8,4 +10,5 @@ public class GetProductViewModel
     public decimal Price { get; set; }
     public string Brand { get; set; }
     public string Category { get; set; }
+    public List<ImageModel> Images { get; set; } = new();
 }

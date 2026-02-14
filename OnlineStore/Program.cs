@@ -1,5 +1,6 @@
 using OnlineStore.Data;
 using OnlineStore.Data.Models.Product;
+using OnlineStore.Services.Images;
 using OnlineStore.Services.PayOut;
 using OnlineStore.Services.Product;
 using OnlineStore.Services.ShoppingCart;
@@ -12,7 +13,9 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddTransient<IUserService, UserService>();
 builder.Services.AddSingleton<LoggedUserService>();
 builder.Services.AddDbContext<ApplicationDbContext>();
+
 builder.Services.AddTransient<IProductService, ProductService>();
+builder.Services.AddTransient<IImageService, ImageService>();
 builder.Services.AddTransient<IShoppingCartService, ShoppingCartService>();
 builder.Services.AddTransient<IPayOutService, PayOutService>();
 

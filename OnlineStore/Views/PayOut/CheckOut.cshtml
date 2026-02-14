@@ -7,26 +7,32 @@
         var index = 0;
     }
 
-    @foreach (var item in Model.CartItems)
-    {
-        <div class="form-group border rounded p-3 mb-3">
-            <label>Product</label>
-            <input class="form-control" value="@item.Product.Name" readonly />
+    <div style="display:flex; flex-direction:row; flex-wrap:wrap; width: 100%; justify-content: center">
+        @foreach (var item in Model.CartItems)
+        {
+            <div class="card border rounded p-3 mb-3" style="width: 18em; margin: 0.5em;">
+                <div class="card-body">
+                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                        @item.Quantity
+                        <span class="visually-hidden">items in cart</span>
+                    </span>
 
-            <label>Quantity</label>
-            <input class="form-control" value="@item.Quantity" readonly />
+                    <label>Product</label>
+                    <input class="form-control" value="@item.Product.Name" readonly />
 
-            <label>Price</label>
-            <input class="form-control" value="@item.Product.Price.ToString("C")" readonly />
+                    <label>Price</label>
+                    <input class="form-control" value="@item.Product.Price.ToString("c", System.Globalization.CultureInfo.GetCultureInfo("de-DE"))" readonly />
 
-            <input type="hidden" name="CartItems[@index].ProductId" value="@item.ProductId" />
-            <input type="hidden" name="CartItems[@index].Quantity" value="@item.Quantity" />
-        </div>
-        index++;
-    }
+                    <input type="hidden" name="CartItems[@index].ProductId" value="@item.ProductId" />
+                    <input type="hidden" name="CartItems[@index].Quantity" value="@item.Quantity" />
+                </div>
+            </div>
+            index++;
+        }
+    </div>
 
     <div class="text-end mt-3">
-        <h5>Total Price: <span class="badge bg-success">@Model.TotalPrice.ToString("C")</span></h5>
+        <h5>Total Price: <span class="badge bg-success">@Model.TotalPrice.ToString("c", System.Globalization.CultureInfo.GetCultureInfo("de-DE"))</span></h5>
     </div>
 
     <hr />
@@ -59,5 +65,5 @@
         <input asp-for="CVV" class="form-control" />
     </div>
 
-    <button type="submit" class="btn btn-success mt-3">✅ Place Order</button>
+    <button type="submit" class="btn btn-success mt-3">Place Order</button>
 </form>

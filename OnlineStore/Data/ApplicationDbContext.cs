@@ -11,6 +11,7 @@ public class ApplicationDbContext : DbContext
     public DbSet<CartItem> CartItems { get; set; }
     public DbSet<ProductsModel> Products { get; set; }
     public DbSet<PayOut> PayOuts { get; set; }
+    public DbSet<ImageModel> Images { get; set; }
     
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {

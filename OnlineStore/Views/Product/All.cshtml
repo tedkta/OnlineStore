@@ -1,6 +1,36 @@
 ﻿@model List<OnlineStore.Data.Models.Product.GetAllProductsViewModel>
 @using OnlineStore.Services.Users
+@using OnlineStore.Services.ShoppingCart          
 @inject LoggedUserService loggedUserService
+@inject IShoppingCartService shoppingCartService   
+@{
+    // Build cart data for the current user (if logged in)
+    var cartItemsDict = new Dictionary<int, int>();
+    var totalItems = 0;
+
+    if (loggedUserService.User != null)
+    {
+        var cart = shoppingCartService.GetCart(loggedUserService.User.Id);
+        if (cart?.CartItems != null)
+        {
+            cartItemsDict = cart.CartItems.ToDictionary(ci => ci.ProductId, ci => ci.Quantity);
+            totalItems = cart.CartItems.Sum(ci => ci.Quantity);
+        }
+    }
+}
+
+<style>
+    .product-card {
+    box-shadow: 10px 3px 52px 1px rgba(0,0,0,0.05);
+    transition: ease-in-out 0.1s;
+    }
+
+    .product-card:hover {
+    box-shadow: 10px 3px 52px 1px rgba(0,0,0,0.15);
+    transform: translate(0px, -0.2em);
+    z-index: 10;
+    }
+</style>
 
 
 <h2>All Products</h2>
@@ -10,38 +40,75 @@
     <a asp-action="Create" asp-controller="Product" class="btn btn-success mb-3">+ Add New Product</a>
 }
 
-<table class="table">
-    <thead>
-    <tr>
-        <th>Name</th>
-        <th>Brand</th>
-        <th>Category</th>
-        <th>Price</th>
-        @if (loggedUserService.IsAdmin)
-        {
-            <th>Actions</th>
-        }
-    </tr>
-    </thead>
-    <tbody>
+<div style="display:flex; flex-direction:row; flex-wrap:wrap; width: 100%; justify-content: center">
     @foreach (var product in Model)
     {
-        <tr>
-            <td>@product.Name</td>
-            <td>@product.Brand</td>
-            <td>@product.Category</td>
-            <td>@product.Price.ToString("C")</td>
-            @if (loggedUserService.IsAdmin)
+        var qty = cartItemsDict.GetValueOrDefault(product.Id, 0); 
+        <div class="card product-card" style="width: 18em; margin: 0.5em; cursor: pointer" data-url="@Url.Action("ProductDetails", "Product", new { id = product.Id })">
+
+            @if (qty > 0)
             {
-                <td>
-                    <a asp-action="Edit" asp-controller="Product" asp-route-id="@product.Id" class="btn btn-sm btn-outline-primary me-1">Edit</a>
-                    <a asp-action="Delete" asp-controller="Product" asp-route-id="@product.Id" class="btn btn-sm btn-outline-danger">Delete</a>
-                </td>
+                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                    @qty
+                    <span class="visually-hidden">items in cart</span>
+                </span>
             }
-            <td>
-                <a asp-action="ProductDetails" asp-controller="Product" asp-route-id="@product.Id" class="btn btn-sm btn-outline-primary">Details</a>
-            </td>
-        </tr>
+
+            <img src="@(product.Images.FirstOrDefault(new OnlineStore.Data.Models.Entities.ImageModel(){ Url = "https://placehold.co/600x400"}).Url ?? "https://placehold.co/600x400")" class="card-img-top" style="object-fit: cover; height: 14em">
+            <div class="card-body">
+                <div style="display: flex; flex-direction:row; width: 100%; justify-content:space-between; align-items: center">
+                    <em class="small" style="color:gray">@product.Category</em>
+                    <span class="badge text-bg-success" style="padding: 4px; font-size: 18px">@product.Price.ToString("c", System.Globalization.CultureInfo.GetCultureInfo("de-DE"))</span>
+                </div>
+                <div>
+                    <b>@product.Name</b>
+                    <p>@product.Brand</p>
+                </div>
+                @if (loggedUserService.IsAdmin)
+                {
+                    <div class="alert alert-dark">
+                        <p>Admin panel:</p>
+                        <div class="btn-group" role="group">
+                            <a asp-action="Edit" asp-controller="Product" asp-route-id="@product.Id" class="btn btn-sm btn-outline-primary me-1">Edit</a>
+                            <a asp-action="Delete" asp-controller="Product" asp-route-id="@product.Id" class="btn btn-sm btn-outline-danger">Delete</a>
+                        </div>
+                    </div>
+                }
+                @if(qty <= 0)
+                {
+                    <a asp-action="AddToCart" asp-controller="ShoppingCart" asp-route-id="@product.Id" class="btn btn-outline-primary" style="width:100%">Add to Cart</a>
+                    
+                }
+                else {
+                    <div class="btn-group" role="group" style="width:100%">
+                        <a asp-action="AddToCart" asp-controller="ShoppingCart" asp-route-id="@product.Id" class="btn btn-outline-primary" >Add</a>
+                        <a asp-action="RemoveFromCart" asp-controller="ShoppingCart" asp-route-id="@product.Id" class="btn btn-outline-danger" >Remove</a>
+                    </div>
+                    
+                }
+            </div>
+        </div>
     }
-    </tbody>
-</table>
+</div>
+
+@if (totalItems > 0)
+{
+
+    <nav class="card position-fixed bottom-0 start-50 translate-middle" style="z-index: 999; width: 64em">
+        <div class="d-flex">
+            <div class="card-body" style="display:flex; flex-direction:row; justify-content:space-between; align-items:center">
+                Items in the cart: @totalItems
+                <a asp-controller="ShoppingCart" asp-action="ViewCart" class="btn btn-primary">View Cart</a>
+            </div>
+        </div>
+    </nav>
+}
+
+<script>
+    document.addEventListener('click', function (e) {
+        let card = e.target.closest('.card[data-url]');
+        if (card && !e.target.closest('a, button')) {
+            window.location.href = card.dataset.url;
+        }
+    });
+</script>

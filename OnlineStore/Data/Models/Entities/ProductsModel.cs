@@ -13,5 +13,8 @@ public class ProductsModel
     public string Brand { get; set; }
     public string Category { get; set; }
 
+    //One to many relationship with images
+    public ICollection<ImageModel> Images { get; set; } = new List<ImageModel>();
+
    
 }

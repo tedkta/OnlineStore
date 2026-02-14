@@ -3,11 +3,96 @@
 }
 
 <div class="text-center">
-    <h1>Welcome to the Store</h1>
-    <p class="lead">Explore products, add them to your cart and start shopping!</p>
 
-    <div style="margin-top: 30px;">
-        <a class="btn btn-primary" href="/Product/All">View Products</a>
-        <a class="btn btn-outline-secondary" href="@Url.Action("ViewCart", "ShoppingCart")">View Cart</a>
+    <!-- Hero section – still gloriously generic -->
+    <div class="container-xl" style="background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1630342654882-aed9e2e86f24?q=80&w=1074&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'); background-size: cover; background-position: center; padding: 6em 2em; color: white; border-radius: 0.5rem; margin-bottom: 2rem;">
+        <h1 class="display-3 fw-bold">Welcome to The Store</h1>
+        <p class="lead fs-2">The Store is a store that sells products.</p>
+        <p class="fs-4">We specialise in business, shops and products.</p>
     </div>
+
+    <p class="fs-5 text-muted mb-5">
+        As you can see, The Store has many products you may buy or purchase.
+        It is very store-like and big big business. Please buy our stuffs.
+    </p>
+
+    <!-- Call to action buttons -->
+    <div class="mb-5">
+        <a class="btn btn-primary btn-lg me-2" href="/Product/All">🛒 View Products</a>
+        <a class="btn btn-outline-secondary btn-lg" href="@Url.Action("ViewCart", "ShoppingCart")">🛍️ View Cart</a>
+    </div>
+
+    <!-- Why choose us? (three absurd reasons) -->
+    <div class="row g-4 py-5">
+        <div class="col-md-4">
+            <div class="card h-100 border-0 shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">✅ We Have Products</h5>
+                    <p class="card-text">Unlike some stores, we actually have products. Many of them. You can even buy them. It’s quite revolutionary.</p>
+                </div>
+                <img class="card-img-bottom" src="https://images.unsplash.com/photo-1642543348781-ed9c6d67ed20?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" />
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card h-100 border-0 shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">✅ We Are a Store</h5>
+                    <p class="card-text">Our building is store‑shaped. We open doors. We accept currency. It’s the full store experience.</p>
+                </div>
+                <img class="card-img-bottom" src="https://images.unsplash.com/photo-1472851294608-062f824d29cc?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" />
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card h-100 border-0 shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">✅ Established some time ago</h5>
+                    <p class="card-text">We’ve been in business for some amount of time</p>
+                </div>
+                <img class="card-img-bottom" src="https://images.unsplash.com/photo-1563861826100-9cb868fdbe1c?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" />
+            </div>
+        </div>
+    </div>
+
+    <h2 class="display-6 mb-4">💬 What Our Customers Say</h2>
+    <div class="row g-4 mb-5">
+        <div class="col-md-4">
+            <div class="card bg-light">
+                <div class="card-body">
+                    <p class="card-text">"I bought a product. It was a product."</p>
+                    <footer class="blockquote-footer">John Doe, satisfied customer</footer>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card bg-light">
+                <div class="card-body">
+                    <p class="card-text">"The store was very store‑like. Would shop again."</p>
+                    <footer class="blockquote-footer">Jane Smith, professional consumer</footer>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card bg-light">
+                <div class="card-body">
+                    <p class="card-text">"⭐⭐⭐⭐⭐ – Five stars because you can't give six."</p>
+                    <footer class="blockquote-footer">Totally not our admin</footer>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Newsletter signup (because every store has one) -->
+    <div class="bg-dark text-white rounded-4 p-5 mb-5">
+        <h3 class="mb-3">📧 Sign Up for Our Newsletter 📧</h3>
+        <p class="mb-4">Get the latest news about products, stores, and other store‑related news. We are definitely not gonna sell it to data brokers</p>
+        <form class="row g-3 justify-content-center">
+            <div class="col-auto">
+                <input type="email" class="form-control form-control-lg" placeholder="your@email.com">
+            </div>
+            <div class="col-auto">
+                <button type="submit" class="btn btn-light btn-lg">Subscribe</button>
+            </div>
+        </form>
+    </div>
+
 </div>

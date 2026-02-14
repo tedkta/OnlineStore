@@ -43,6 +43,26 @@ namespace OnlineStore.Migrations
                     b.ToTable("CartItems");
                 });
 
+            modelBuilder.Entity("OnlineStore.Data.Models.Entities.ImageModel", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Url")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("Images");
+                });
+
             modelBuilder.Entity("OnlineStore.Data.Models.Entities.PayOut", b =>
                 {
                     b.Property<int>("Id")
@@ -153,6 +173,17 @@ namespace OnlineStore.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("OnlineStore.Data.Models.Entities.ImageModel", b =>
+                {
+                    b.HasOne("OnlineStore.Data.Models.Entities.ProductsModel", "Product")
+                        .WithMany("Images")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Product");
+                });
+
             modelBuilder.Entity("OnlineStore.Data.Models.Entities.PayOut", b =>
                 {
                     b.HasOne("OnlineStore.Data.Models.Entities.ProductsModel", "Product")
@@ -170,6 +201,11 @@ namespace OnlineStore.Migrations
                     b.Navigation("Product");
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("OnlineStore.Data.Models.Entities.ProductsModel", b =>
+                {
+                    b.Navigation("Images");
                 });
 #pragma warning restore 612, 618
         }

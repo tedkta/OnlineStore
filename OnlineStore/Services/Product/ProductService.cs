@@ -1,13 +1,15 @@
-﻿using OnlineStore.Data;
+﻿using Microsoft.EntityFrameworkCore;
+using OnlineStore.Data;
 using OnlineStore.Data.Models.Entities;
 using OnlineStore.Data.Models.Product;
+using OnlineStore.Migrations;
 using OnlineStore.Services.Users;
 
 namespace OnlineStore.Services.Product;
 
 public class ProductService : IProductService
 {
-   private readonly ApplicationDbContext dbContext; 
+        private readonly ApplicationDbContext dbContext; 
         private readonly LoggedUserService loggedUserService;
 
         public ProductService(ApplicationDbContext dbContext, LoggedUserService loggedUserService) 
@@ -29,6 +31,8 @@ public class ProductService : IProductService
                     Price = w.Price,
                     Brand = w.Brand,
                     Category = w.Category,
+                    Images = w.Images.ToList(),
+                    
 
                 })
                 .ToList(); 
@@ -38,18 +42,29 @@ public class ProductService : IProductService
 
         public GetProductViewModel Get(long id) //Използваме го за да вземем конкретна тренировка и после да я покажем във View.
         {
-            ProductsModel entity = GetById(id);
-            GetProductViewModel model = new GetProductViewModel(); 
+            //Зареди данните на картинките
+            var entity = dbContext.Products
+            .Include(p => p.Images)                 
+            .FirstOrDefault(p => p.Id == id);
 
-            model.Id = entity.Id; //Използва се за да можем да се възползваме от CRUD опреациите
-            model.Name = entity.Name;
-            model.Description = entity.Description;
-            model.Price = entity.Price;
-            model.Brand = entity.Brand;
-            model.Category = entity.Category;
+            if (entity == null)
+                return null;
 
-            return model;
-        } 
+            return new GetProductViewModel
+            {
+                Id = entity.Id,
+                Name = entity.Name,
+                Description = entity.Description,
+                Price = entity.Price,
+                Brand = entity.Brand,
+                Category = entity.Category,
+                Images = entity.Images.Select(i => new ImageModel
+                {
+                    Id = i.Id,
+                    Url = i.Url
+                }).ToList()
+            };
+        }
 
         public void Create(CreateProductDto productDto) 
         {
