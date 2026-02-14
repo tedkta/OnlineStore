@@ -15,6 +15,6 @@ public class ApplicationDbContext : DbContext
     
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        optionsBuilder.UseMySQL("Server=localhost;Database=OnlineStore_db;User=root;Password=1234;Port=3306");
+        optionsBuilder.UseMySQL("Server=127.0.0.1;Database=OnlineStore_db;User=root;Password=1234;Port=3306");
     }
 }
