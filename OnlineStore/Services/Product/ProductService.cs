@@ -68,6 +68,12 @@ public class ProductService : IProductService
 
         public void Create(CreateProductDto productDto) 
         {
+            
+            if (!loggedUserService.IsAdmin || !loggedUserService.IsLogged)
+            {
+                throw new UnauthorizedAccessException("Only administrators can delete products.");
+            }
+            
             ProductsModel newProduct = new ProductsModel();
             newProduct.Name = productDto.Name;
             newProduct.Description = productDto.Description;
@@ -81,6 +87,10 @@ public class ProductService : IProductService
 
         public void Update(long id, UpdateProductDto updateProduct)
         {
+            if (!loggedUserService.IsAdmin || !loggedUserService.IsLogged)
+            {
+                throw new UnauthorizedAccessException("Only administrators can delete products.");
+            }
 
             ProductsModel newProduct = GetById(id);
             newProduct.Name = updateProduct.Name;
@@ -94,6 +104,11 @@ public class ProductService : IProductService
 
         public void Delete(long id)
         {
+            if (!loggedUserService.IsAdmin || !loggedUserService.IsLogged)
+            {
+                throw new UnauthorizedAccessException("Only administrators can delete products.");
+            }
+            
             ProductsModel product = GetById(id);
             dbContext.Products.Remove(product);
             dbContext.SaveChanges();
