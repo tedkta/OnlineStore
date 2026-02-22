@@ -13,11 +13,15 @@ public class ShoppingCartService : IShoppingCartService
         this.dbContext = dbContext;
     }
 
+    //По-различни функции от другите заради натурата на кошницата
+
+    //Добавяме продукт чрез неговият ID към кошницата на конкретен user
     public void AddToCart(int id, int userId)
     {
         ProductsModel product = dbContext.Products.Find(id);
         if (product == null) return;
 
+        //Вместо да пазим дълъг лист от дубликати пазим уникален ID и кол-во продукти
         CartItem existingItem = dbContext.CartItems
             .FirstOrDefault(c => c.ProductId == id && c.UserId == userId);
 
@@ -38,6 +42,7 @@ public class ShoppingCartService : IShoppingCartService
         dbContext.SaveChanges();
     }
 
+    //Изваждаме данните на кошницата на конкретен user
     public ShoppingCartViewModel GetCart(int userId)
     {
         List<CartItem> items = dbContext.CartItems
@@ -55,6 +60,7 @@ public class ShoppingCartService : IShoppingCartService
             TotalQuantity = totalQuantity
         };
     }
+
 
     public void RemoveFromCart(int id, int userId)
     {

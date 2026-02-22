@@ -16,6 +16,9 @@ namespace OnlineStore.Services.Images
             this.dbContext = dbContext;
         }
 
+        //Базови CRUD операции подобно на другите service имплементации
+        //За по-лесна имплементация ползваме URL на снимка вместо самия файл
+
         public void Create(long id, string url)
         {
             var image = new ImageModel { ProductId = (int)id, Url = url };

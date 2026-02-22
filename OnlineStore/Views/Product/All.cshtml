@@ -54,7 +54,7 @@
                 </span>
             }
 
-            <img src="@(product.Images.FirstOrDefault(new OnlineStore.Data.Models.Entities.ImageModel(){ Url = "https://placehold.co/600x400"}).Url ?? "https://placehold.co/600x400")" class="card-img-top" style="object-fit: cover; height: 14em">
+            <img src="@(product.Images.FirstOrDefault(new OnlineStore.Data.Models.Entities.ImageModel(){ Url = "https://placehold.co/600x400"}).Url)" class="card-img-top" style="object-fit: cover; height: 14em">
             <div class="card-body">
                 <div style="display: flex; flex-direction:row; width: 100%; justify-content:space-between; align-items: center">
                     <em class="small" style="color:gray">@product.Category</em>
