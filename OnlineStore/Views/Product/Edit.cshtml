@@ -31,13 +31,11 @@
 
 <h3>Product Images</h3>
 
-<!-- Add new image -->
 <div class="mb-3">
     <input type="text" id="newImageUrl" class="form-control" placeholder="Image URL" style="width: 300px; display: inline;" />
     <button type="button" id="addImageBtn" class="btn btn-success" data-product-id="@Model.Id">Add Image</button>
 </div>
 
-<!-- List of existing images -->
 <ul id="imageList" class="list-group">
     @foreach (var img in Model.Images)
     {
@@ -52,17 +50,18 @@
     }
 </ul>
 
-<!-- Use Fancy AJAX to make images actually work -->
+<!-- Използваме AJAX за да добавяме картинки динамично -->
 @section Scripts {
     <script>
         const productId = @Model.Id;
 
-        // Add image
+        //Функционалност на добавяне на картинка чрез Event Handler
         document.getElementById('addImageBtn').addEventListener('click', function() {
             const urlInput = document.getElementById('newImageUrl');
             const url = urlInput.value.trim();
             if (!url) return;
 
+            //Използваме fetch всеедно е asp-action + asp-controller
             fetch('/Product/AddImage', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
@@ -70,7 +69,7 @@
             })
             .then(res => res.json())
             .then(data => {
-                // Create new list item
+                //Добавяме нов елемент
                 const li = document.createElement('li');
                 li.className = 'list-group-item d-flex justify-content-between align-items-center';
                 li.dataset.imageId = data.id;
@@ -87,7 +86,7 @@
             });
         });
 
-        // Handle update and remove buttons (event delegation)
+        //При клик махаме елемента пак чрез fetch
         document.getElementById('imageList').addEventListener('click', function(e) {
             const target = e.target;
             const li = target.closest('li');

@@ -105,6 +105,7 @@
 }
 
 <script>
+    //Динамично добавяме възможност да отворим продукт когато кликаме на картичката за по добър UX
     document.addEventListener('click', function (e) {
         let card = e.target.closest('.card[data-url]');
         if (card && !e.target.closest('a, button')) {

@@ -40,7 +40,7 @@ public class ProductService : IProductService
 
 
 
-        public GetProductViewModel Get(long id) //Използваме го за да вземем конкретна тренировка и после да я покажем във View.
+        public GetProductViewModel Get(long id) //Използваме го за да вземем конкретен продукт и после да го покажем във View.
         {
             //Зареди данните на картинките
             var entity = dbContext.Products
